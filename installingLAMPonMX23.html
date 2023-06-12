@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 7.3.4.2 (Linux)"/>
+	<meta name="created" content="2023-02-18T00:35:12.922820206"/>
+	<meta name="changed" content="2023-06-11T19:53:26.550688508"/>
+	<style type="text/css">
+		@page { size: 8.5in 11in; margin: 0.79in }
+		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
+		pre { background: transparent }
+		pre.western { font-family: "Liberation Mono", monospace; font-size: 10pt }
+		pre.cjk { font-family: "Noto Sans Mono CJK SC", monospace; font-size: 10pt }
+		pre.ctl { font-family: "Liberation Mono", monospace; font-size: 10pt }
+		code.western { font-family: "Liberation Mono", monospace }
+		code.cjk { font-family: "Noto Sans Mono CJK SC", monospace }
+		code.ctl { font-family: "Liberation Mono", monospace }
+		a:link { color: #000080; so-language: zxx; text-decoration: underline }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+https://mxlinux.org/wiki/networking/lamp-setup/</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">The advice given
+here is just a basic understanding of knowledge. Please do further
+reading on each subject in order to get a full compression of a Linux
+system running Apache Web Server, PHP, and MariaDB.</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">In this sample we
+are going to install our a Web Server using Apache2, php8, and
+MariaDB.<br/>
+<br/>
+<b>Installing Apache, PHP, MariaDB</b></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Open up: MX Package
+Installer</p>
+<p style="line-height: 100%; margin-bottom: 0in">in the search bar
+type: Apache<br/>
+Click on the option: Local Web Server … apache2,
+php8.2, mariaDB<br/>
+then click install.<br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Setting up Apache
+Web Server with a pretend site named help with a public_html
+directory.<br/>
+Open a terminal and type:</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+Sudo chown -R
+$USER:$USER <i>/var/www/help</i></p>
+<p style="line-height: 100%; margin-bottom: 0in">mkdir
+/var/www/help/public_html/</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Now add the
+following to the file for testing:</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">sudo nano
+/var/www/help/public_html/index.php</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+<code class="western">&lt;html&gt;</code></p>
+<pre class="western"><code class="western">    </code><code class="western">&lt;head&gt;</code>
+<code class="western">        </code><code class="western">&lt;title&gt;Welcome to Your_domain!&lt;/title&gt;</code>
+<code class="western">    </code><code class="western">&lt;/head&gt;</code>
+<code class="western">    </code><code class="western">&lt;body&gt;</code>
+<code class="western">        </code><code class="western">&lt;h1&gt;Success!  The host is working!&lt;/h1&gt;</code>
+<code class="western">	  &lt;?</code><code class="western">php echo “Hello World </code><code class="western">php is working</code><code class="western">”; </code><code class="western">?&gt;</code>
+<code class="western">    </code><code class="western">&lt;/body&gt;</code>
+<code class="western">&lt;/html&gt;</code></pre><p style="line-height: 100%; margin-bottom: 0in">
+EXIT AND SAVE.</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+This is a file
+that will set up the name and location on disk as to the location of
+your website.</p>
+<p style="line-height: 100%; margin-bottom: 0in">sudo nano
+/etc/apache2/sites-available/ashershelp.conf</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">&lt;VirtualHost
+*:80&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">    ServerAdmin
+webmaster@localhost</p>
+<p style="line-height: 100%; margin-bottom: 0in">    ServerName
+ashershelp</p>
+<p style="line-height: 100%; margin-bottom: 0in">    ServerAlias
+www.ashershelp.com</p>
+<p style="line-height: 100%; margin-bottom: 0in">    DocumentRoot
+/var/www/help/public_html/</p>
+<p style="line-height: 100%; margin-bottom: 0in">    ErrorLog
+${APACHE_LOG_DIR}/error.log</p>
+<p style="line-height: 100%; margin-bottom: 0in">    CustomLog
+${APACHE_LOG_DIR}/access.log combined</p>
+<p style="line-height: 100%; margin-bottom: 0in">&lt;/VirtualHost&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">EXIT AND SAVE</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Now lets enable the
+site:</p>
+<p style="line-height: 100%; margin-bottom: 0in">a2ensite
+ashershelp.conf<br/>
+<br/>
+Lets disable the default site:</p>
+<p style="line-height: 100%; margin-bottom: 0in">a2dissite
+000-default.conf</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Lets test the
+current configuration:<br/>
+apache2ctl configtest<br/>
+	output should
+end with …<br/>
+	…</p>
+<p style="line-height: 100%; margin-bottom: 0in">	Syntax OK<br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Now Lets restart the
+Apache Web Server:<br/>
+sudo service apache2 restart</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Lets check the
+status of the web server:</p>
+<p style="line-height: 100%; margin-bottom: 0in">sudo service apache2
+restart</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Now lets check in a
+web browser, Open a web browser and in the URL line
+type:<br/>
+<a href="http://localhost/">http://localhost</a><br/>
+or<br/>
+<a href="http://127.0.0.1/">http://127.0.0.1</a><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="5" style="font-size: 20pt"><b>Setting
+up and securing mariaDB.</b></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">OK this is the time
+that you will want to save a password somewhere. I suggest Keepass or
+LastPass, a password manager of some kind is good enough.</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">This is also a good
+time to do a back up and then configure the Database because right
+now <br/>
+* There is No password on the root user.<br/>
+* Root login
+can be accessed from another machine.<br/>
+* anonymous can log in,
+this is good for learning.<br/>
+* there is a database named test,
+this is good for learning.<br/>
+<br/>
+OK Now lets secure the database
+and for getting it ready for production environment. 
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Open a terminal up
+and type:<br/>
+sudo mysql_secure_installation</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>[sudo]
+password for asher:           </i></font>
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>NOTE:
+RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in">      <font size="2" style="font-size: 10pt"><i>SERVERS
+IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>In
+order to log into MariaDB to secure it, we'll need the current</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>password
+for the root user. If you've just installed MariaDB, and</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>haven't
+set the root password yet, you should just press enter here.</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Enter
+current password for root (enter for none):</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Press Enter.<br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>OK,
+successfully used password, moving on...</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Setting
+the root password or using the unix_socket ensures that nobody</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>can
+log into the MariaDB root user without the proper authorisation.</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>You
+already have your root account protected, so you can safely answer
+'n'.</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Switch
+to unix_socket authentication [Y/n] </i></font>
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Press Y</p>
+<p style="line-height: 100%; margin-bottom: 0in">* If you type Y here
+you will only be able to login in Apache through that computer only.
+This method is very secure.</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">You already have
+your root account protected, so you can safely answer 'n'.</p>
+<p style="line-height: 100%; margin-bottom: 0in">Change the root
+password? [Y/n] Y</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">* If you want a
+password as well this is the time to do it now</p>
+<p style="line-height: 100%; margin-bottom: 0in">Enter password twice
+like normal.<br/>
+<br/>
+<font size="2" style="font-size: 10pt"><i>Password
+updated successfully!</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Reloading
+privilege tables..</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"> <font size="2" style="font-size: 10pt"><i>...
+Success!</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>By
+default, a MariaDB installation has an anonymous user, allowing
+anyone</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>to
+log into MariaDB without having to have a user account created for</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>them.
+ This is intended only for testing, and to make the installation</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>go
+a bit smoother.  You should remove them before moving into a</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>production
+environment.</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Remove
+anonymous users? [Y/n] Y</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">* This is
+suggestible to make your LAMP server more secure.</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Normally,
+root should only be allowed to connect from 'localhost'.  This</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>ensures
+that someone cannot guess at the root password from the network.</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Disallow
+root login remotely? [Y/n]</i></font> Y</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>By
+default, MariaDB comes with a database named 'test' that anyone can</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>access.
+ This is also intended only for testing, and should be removed</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>before
+moving into a production environment.</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Remove
+test database and access to it? [Y/n] </i></font><font size="3" style="font-size: 12pt"><span style="font-style: normal">Y</span></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Reloading
+the privilege tables will ensure that all changes made so far</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>will
+take effect immediately.</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Reload
+privilege tables now? [Y/n]</i></font> Y</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Cleaning
+up...</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>All
+done!  If you've completed all of the above steps, your MariaDB</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>installation
+should now be secure.</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="2" style="font-size: 10pt"><i>Thanks
+for using MariaDB!</i></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Now lets exit the
+terminal:</p>
+<p style="line-height: 100%; margin-bottom: 0in">exit</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="5" style="font-size: 20pt"><b>Installing
+up phpmyadmin</b></font></p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+<br/>
+
+</p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+<font size="3" style="font-size: 12pt">Installing phpmyadmin is not
+necessary at all. It is highly suggestive to those just starting out
+learning or those who are running a home server. As well as; if you
+do not want to interact with a database through a terminal
+environment. Then phpmyadmin is a great program to install for a
+visual understanding of the database. Terminal environmental commands
+can be used within phpmyadmin as well. Also phpmyadmin also can show
+you the output so you can learn through example.<br/>
+</font><br/>
+
+</p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+<font size="3" style="font-size: 12pt">To install phpmyadmin open up
+MX Package Installer. <br/>
+Click on the Tab “Enable Repos”<br/>
+In
+the search bar type “phpmyadmin”</font></p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+<font size="3" style="font-size: 12pt"><br/>
+During the installation
+it will ask you a question<br/>
+<br/>
+* apache2<br/>
+*
+lighttpd<br/>
+<br/>
+click the apache2 then click Next.<br/>
+<br/>
+Configure
+database for phpmyadmin with dbconfig-common?<br/>
+<br/>
+Leave check
+and click Next<br/>
+<br/>
+MySQL application password for
+phpmyadmin:<br/>
+<u>Now is the time to add your MariaDB
+password</u><br/>
+<br/>
+Password confirmation:<br/>
+<u>Now is the
+time to add your MariaDB password</u><br/>
+<br/>
+Close MX Package
+Installer.<br/>
+</font><br/>
+
+</p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+<font size="3" style="font-size: 12pt">Open a web browser and in the
+URL line type:<br/>
+<a href="http://localhost/phpmyadmin">http://localhost/phpmyadmin</a><br/>
+<br/>
+You
+should be confronted with a login screen:<br/>
+Username:
+root<br/>
+Password: <u>Now is the time to add your MariaDB password</u><br/>
+<br/>
+</font><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="5" style="font-size: 20pt"><b>Setting
+up the Firewall</b></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">In creating a
+firewall you want to allow Apache server traffic to go out and hide
+the MariaDB server, so as to only your scripts can interact with
+MariaDB.</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">* Status of a
+firewall<br/>
+sudo ufw status<br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">* Get Help, this
+will display a list of command that you can use<br/>
+sudo ufw help 
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">* And for a list of
+Available presets type:<br/>
+sudo ufw app list<br/>
+<br/>
+in the long
+list you will see 4 that have WWW(port 80), WWW Cache(port 8080), WWW
+Full(ports 80,443), WWW Secure(Port 443). ***<br/>
+WWW will allow
+traffic to run in port 80 ONLY.<br/>
+<br/>
+To view the information
+about these files type:<br/>
+sudo ufw app info WWW</p>
+<p style="line-height: 100%; margin-bottom: 0in">or</p>
+<p style="line-height: 100%; margin-bottom: 0in">sudo ufw app info
+“WWW Cache”</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+<br/>
+For this
+insecure method we are going to use. This will allow http traffic
+from your computer.<br/>
+sudo ufw allow WWW<br/>
+<br/>
+now lets
+reload the firewall<br/>
+sudo ufw reload<br/>
+<br/>
+to view the
+current rules of the firewall:<br/>
+sudo ufw status numbered<br/>
+<br/>
+If
+you make a mistake and want to delete a rule check out Final Notes.<br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Please note: That
+setting up a firewall that will block Database traffic may interfere
+with example programs that interact with the Database. And in those
+cases you can alter the firewall to allow traffic to and from that
+computer only is suggestible. 
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="5" style="font-size: 20pt"><b>Terminal
+Command</b></font><font size="5" style="font-size: 20pt"><b>s</b></font><font size="5" style="font-size: 20pt"><b>
+that you will be using</b></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">a2ensite</p>
+<p style="line-height: 100%; margin-bottom: 0in">a2dissite<br/>
+apache2ctl<br/>
+chown<br/>
+cd</p>
+<p style="line-height: 100%; margin-bottom: 0in">exit<br/>
+mkdir</p>
+<p style="line-height: 100%; margin-bottom: 0in">mysql_secure_installation
+<br/>
+nano<br/>
+service<br/>
+sudo</p>
+<p style="line-height: 100%; margin-bottom: 0in">ufw<br/>
+ 
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><b>S</b><b>uggested
+programs </b><b>to install</b><b>:</b><br/>
+KeePassXC</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><b>Other suggestible
+programs to install, </b><b>these programs should be on the system
+admins computer and not necessarily on the server computer unless th</b><b>e
+server</b><b> is your main computer</b><b>:</b><br/>
+net-tools (This
+is a collection of tools that will be listed at the end).<br/>
+nmap
+(this will check what ports are open on your computer. Please
+understand the legality of using this program on other than your own
+network).</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><b>Other Program</b><b>s</b>
+that are installed by default, you may want to also check out.</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">a2disconf  a2dismod 
+a2dissite  a2enconf  a2enmod  a2ensite  a2query</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">mariadb             
+         mariadbd-safe                 mariadb-repair</p>
+<p style="line-height: 100%; margin-bottom: 0in">mariadb-access      
+         mariadbd-safe-helper          mariadb-report</p>
+<p style="line-height: 100%; margin-bottom: 0in">mariadb-admin       
+         mariadb-dump                  mariadb-secure-installation</p>
+<p style="line-height: 100%; margin-bottom: 0in">mariadb-analyze     
+         mariadb-dumpslow              mariadb-service-convert</p>
+<p style="line-height: 100%; margin-bottom: 0in">mariadb-binlog      
+         mariadb-find-rows             mariadb-setpermission</p>
+<p style="line-height: 100%; margin-bottom: 0in">mariadb-check       
+         mariadb-fix-extensions        mariadb-show</p>
+<p style="line-height: 100%; margin-bottom: 0in">mariadbcheck        
+         mariadb-hotcopy               mariadb-slap</p>
+<p style="line-height: 100%; margin-bottom: 0in">mariadb-conv        
+         mariadb-import                mariadb-tzinfo-to-sql</p>
+<p style="line-height: 100%; margin-bottom: 0in">mariadb-convert-table-format
+ mariadb-install-db            mariadb-upgrade</p>
+<p style="line-height: 100%; margin-bottom: 0in">mariadbd            
+         mariadb-optimize              mariadb-waitpid</p>
+<p style="line-height: 100%; margin-bottom: 0in">mariadbd-multi      
+         mariadb-plugin</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">mysql_setpermission</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">php    php8.2   
+phpdismod    phpenmod    phpquery</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><b>net-tools</b> <i>if
+you choose to install this package it comes with:</i></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+arp, ifconfig,
+netstat, rarp, nameif and route. 
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">Additionally, this
+package contains utilities relating to particular network hardware
+types (plipconfig, slattach, mii-tool) and advanced aspects of IP
+configuration (iptunnel, ipmaddr).</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><i>*** Port
+information:</i></p>
+<p style="line-height: 100%; margin-bottom: 0in">Port 8080 is a
+user’s way of temporarily using a Web-Server. The Server has to be
+set up this way.</p>
+<p style="line-height: 100%; margin-bottom: 0in">Port 80 (Default) is
+http traffic with NO encryption.<br/>
+Port 443 is https traffic with
+encryption you must have a signed certificate or a self-signed
+certificate and addition configuration is required. These
+explanations are beyond the scope of this lesson.</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="5" style="font-size: 20pt"><b>Authors
+Suggestions:</b></font><br/>
+Install php-cli. If you take all the
+effort to learn a language use it to it’s full benefit. PHP-CLI can
+replace the need to learn BASH or Python as a scripting language. And
+on top of it PHP is a fully enriched programming language. Allowing
+you to the ability to create complex Object Orientated scripting
+programs. In my opinion I would like to see PHP-CLI be a standard on
+all Linux OS’s.</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><font size="6" style="font-size: 22pt"><b>Final
+Notes:</b></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><b>Apache</b></p>
+<p style="line-height: 100%; margin-bottom: 0in"><u>Check Status</u><br/>
+sudo
+service apache2 status</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><u>Restart</u></p>
+<p style="line-height: 100%; margin-bottom: 0in">sudo service apache2
+restart<br/>
+<br/>
+<u>E</u><u>nable Apache Web server at bootup:</u><br/>
+sudo
+service apache2 enable<br/>
+<br/>
+<u>D</u><u>isable Apache Web server
+at bootup:</u></p>
+<p style="line-height: 100%; margin-bottom: 0in">sudo service apache2
+disable</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><b>MariaDB</b></p>
+<p style="line-height: 100%; margin-bottom: 0in"><u>R</u><u>estart</u><br/>
+sudo
+service mysql restart</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><u>Status</u></p>
+<p style="line-height: 100%; margin-bottom: 0in">Sudo service mariadb
+status</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><u>Enable MariaDB
+service at startup:</u></p>
+<p style="line-height: 100%; margin-bottom: 0in">sudo service mysql
+enable</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><u>Disable MariaDB
+service at startup:</u></p>
+<p style="line-height: 100%; margin-bottom: 0in">sudo service mysql
+disable</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><b>FIREWALL</b></p>
+<p style="line-height: 100%; margin-bottom: 0in"><u>E</u><u>nable the
+firewall </u><u>now and at startup.</u><br/>
+sudo ufw enable<br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><u>R</u><u>eload the
+firewall:</u><br/>
+sudo ufw reload</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+<u>D</u><u>isable
+the firewall:</u><br/>
+sudo ufw disable<br/>
+<br/>
+<u>S</u><u>earch
+for pre-made rules:</u><br/>
+sudo ufw app list</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><u>L</u><u>ook at
+the </u><u>pre-made </u><u>rules </u><u>set</u><u>:</u><br/>
+sudo ufw
+app info “WWW Full”<br/>
+<br/>
+<u>R</u><u>ules currently being
+used:</u><br/>
+sudo ufw status numbered<br/>
+<br/>
+<u>D</u><u>elete a
+rule:</u> <br/>
+sudo ufw delete NUMBER <br/>
+<br/>
+<br/>
+<br/>
+
+</p>
+</body>
+</html>
