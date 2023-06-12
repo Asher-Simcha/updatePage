@@ -5,7 +5,7 @@
 	<title></title>
 	<meta name="generator" content="LibreOffice 7.3.4.2 (Linux)"/>
 	<meta name="created" content="2023-02-18T00:35:12.922820206"/>
-	<meta name="changed" content="2023-06-11T23:39:23.906413968"/>
+	<meta name="changed" content="2023-06-12T00:04:57.307261187"/>
 	<style type="text/css">
 		@page { size: 8.5in 11in; margin: 0.79in }
 		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
@@ -136,7 +136,7 @@ sudo service apache2 restart</p>
 <p style="line-height: 100%; margin-bottom: 0in">Lets check the
 status of the web server:</p>
 <p style="line-height: 100%; margin-bottom: 0in">sudo service apache2
-restart</p>
+status</p>
 <p style="line-height: 100%; margin-bottom: 0in"><br/>
 
 </p>
@@ -590,9 +590,7 @@ Port 443 is https traffic with
 encryption you must have a signed certificate or a self-signed
 certificate and addition configuration is required. These
 explanations are beyond the scope of this lesson.</p>
-<p style="line-height: 100%; margin-bottom: 0in"><br/>
-
-</p>
+<p style="line-height: 100%; margin-bottom: 0in">Port 3306 is MariaDB</p>
 <p style="line-height: 100%; margin-bottom: 0in"><br/>
 
 </p>
@@ -714,9 +712,10 @@ configuration after 1<sup>st</sup> print.</b></p>
 <p style="line-height: 100%; margin-bottom: 0in"><span style="font-weight: normal">Show
 php errors. </span><span style="font-weight: normal">This is for
 development only and many people want to know where the errors are in
-their code.<br/>
+their </span><span style="font-weight: normal">php </span><span style="font-weight: normal">code.<br/>
 <br/>
-Open a terminal up and type:<br/>
+Open
+a terminal up and type:<br/>
 sudo nano
 </span><i><span style="font-weight: normal">/etc/php/8.2/apache2/php.ini<br/>
 <br/>
@@ -729,12 +728,13 @@ type: display_errors</span></i><span style="font-weight: normal"><br/>
 using CTRL + w till you find the correct one<br/>
 </span><span style="font-weight: normal">lets
 comment out that line by adding a ; at the start of the line.</span></p>
-<p style="line-height: 100%; margin-bottom: 0in"><span style="font-weight: normal">In
-standard practice you would add a line something like:<br/>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+In standard practice you would add a line something like:<br/>
 ;
 display_errors=Off<br/>
-; 06-11-2023 Asher Simcha Change</span></p>
-<p style="line-height: 100%; margin-bottom: 0in"><span style="font-weight: normal">display_errors=On</span></p>
+; 06-11-2023 Asher Simcha Change</p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+display_errors=On</p>
 <p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
 <br/>
 EXIT AND SAVE CTRL + x<br/>
