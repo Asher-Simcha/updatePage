@@ -5,7 +5,7 @@
 	<title></title>
 	<meta name="generator" content="LibreOffice 7.3.4.2 (Linux)"/>
 	<meta name="created" content="2023-02-18T00:35:12.922820206"/>
-	<meta name="changed" content="2023-06-11T20:36:46.730742173"/>
+	<meta name="changed" content="2023-06-11T23:39:23.906413968"/>
 	<style type="text/css">
 		@page { size: 8.5in 11in; margin: 0.79in }
 		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
@@ -17,7 +17,6 @@
 		code.cjk { font-family: "Noto Sans Mono CJK SC", monospace }
 		code.ctl { font-family: "Liberation Mono", monospace }
 		a:link { color: #000080; so-language: zxx; text-decoration: underline }
-		a:visited { color: #800000; so-language: zxx; text-decoration: underline }
 	</style>
 </head>
 <body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
@@ -704,6 +703,59 @@ rule:</u> <br/>
 sudo ufw delete NUMBER <br/>
 <br/>
 <br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><b>Additional
+configuration after 1<sup>st</sup> print.</b></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><span style="font-weight: normal">Show
+php errors. </span><span style="font-weight: normal">This is for
+development only and many people want to know where the errors are in
+their code.<br/>
+<br/>
+Open a terminal up and type:<br/>
+sudo nano
+</span><i><span style="font-weight: normal">/etc/php/8.2/apache2/php.ini<br/>
+<br/>
+Now
+lets search for display_errors until we find the one that looks like
+display_errors = Off<br/>
+CTRL + w <br/>
+type: display_errors</span></i><span style="font-weight: normal"><br/>
+</span><span style="font-weight: normal">keep
+using CTRL + w till you find the correct one<br/>
+</span><span style="font-weight: normal">lets
+comment out that line by adding a ; at the start of the line.</span></p>
+<p style="line-height: 100%; margin-bottom: 0in"><span style="font-weight: normal">In
+standard practice you would add a line something like:<br/>
+;
+display_errors=Off<br/>
+; 06-11-2023 Asher Simcha Change</span></p>
+<p style="line-height: 100%; margin-bottom: 0in"><span style="font-weight: normal">display_errors=On</span></p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+<br/>
+EXIT AND SAVE CTRL + x<br/>
+Save Y 
+</p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+<br/>
+
+</p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+Restart the apache server:<br/>
+sudo service apache2 restart</p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+<br/>
+
+</p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
+<br/>
+
+</p>
+<p style="font-weight: normal; line-height: 100%; margin-bottom: 0in">
 <br/>
 
 </p>
